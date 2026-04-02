@@ -1,8 +1,9 @@
 import Button from "../atoms/Button";
 import { IoMdInformationCircleOutline } from "react-icons/io";
 import { MdVolumeOff } from "react-icons/md";
+import { Link } from "react-router-dom";
 
-const Hero = ({ heroImg, title, synopsis, ageRating }) => {
+const Hero = ({ id, heroImg, title, synopsis, ageRating }) => {
   return (
     <section className='relative w-full h-[300px] md:h-[400px] lg:h-[470px] flex flex-col justify-end text-white mb-2'>
       <img
@@ -28,10 +29,12 @@ const Hero = ({ heroImg, title, synopsis, ageRating }) => {
             <Button variant='primary' className='py-2 px-3 md:py-3.5 md:px-5'>
               Mulai
             </Button>
-            <Button variant='secondary' className='gap-1'>
+            <Link
+              to={`/home/detail/${id}`}
+              className='border text-white rounded-3xl text-xs md:text-lg cursor-pointer flex justify-center items-center transition-all duration-200 active:scale-95 bg-surface-light border-border-subtle font-semibold py-2 px-3 md:py-3.5 md:px-5 hover:bg-gray-800 gap-1'>
               <IoMdInformationCircleOutline />
               <span>Selengkapnya</span>
-            </Button>
+            </Link>
             <span className='bg-transparent border border-secondary py-2 px-3 md:py-3.5 md:px-4 rounded-3xl text-xs md:text-lg'>
               {ageRating}
             </span>

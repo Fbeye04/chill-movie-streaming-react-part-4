@@ -4,6 +4,7 @@ import { MdOutlineDelete } from "react-icons/md";
 import HoverMovieCard from "./HoverMovieCard";
 import useMovieStore from "../../store/movieStore";
 import Button from "../atoms/Button";
+import { useNavigate } from "react-router-dom";
 
 const MovieCard = ({
   id,
@@ -19,7 +20,9 @@ const MovieCard = ({
   ageRating,
   isMyList,
 }) => {
+  const navigate = useNavigate();
   const { toggleMyList } = useMovieStore();
+
   const isLandscape = variant === "landscape";
 
   const displayImage = isLandscape ? backdrop : image;
@@ -32,7 +35,12 @@ const MovieCard = ({
 
   return (
     <div
-      className={`relative text-white shrink-0 group z-10 hover:z-50 ${cardStyle[variant]}`}>
+      onClick={() => {
+        if (window.innerWidth < 1024) {
+          navigate(`/home/detail/${id}`);
+        }
+      }}
+      className={`relative text-white shrink-0 group z-10 cursor-pointer hover:z-40 ${cardStyle[variant]}`}>
       <div className='w-full h-full relative'>
         <img
           src={displayImage}
@@ -56,13 +64,13 @@ const MovieCard = ({
       </div>
 
       {variant === "grid" ? (
-        <div className='absolute inset-0 bg-black/70 flex justify-center items-center rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-50'>
+        <div className='absolute inset-0 bg-black/70 flex justify-center items-center rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-40'>
           <Button variant='danger' onClick={() => toggleMyList(id)}>
             <MdOutlineDelete className='text-white text-base md:text-xl font-bold' />
           </Button>
         </div>
       ) : (
-        <div className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50 hidden lg:block invisible group-hover:visible opacity-0 scale-95 group-hover:opacity-100 group-hover:scale-100 transition-all duration-300 ease-in-out pointer-events-none group-hover:pointer-events-auto'>
+        <div className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-40 hidden lg:block invisible group-hover:visible opacity-0 scale-95 group-hover:opacity-100 group-hover:scale-100 transition-all duration-300 ease-in-out pointer-events-none group-hover:pointer-events-auto'>
           <HoverMovieCard
             id={id}
             title={title}

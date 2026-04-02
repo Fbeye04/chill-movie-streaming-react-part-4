@@ -1,8 +1,7 @@
-import { IoMdPlay } from "react-icons/io";
-import { IoMdAdd } from "react-icons/io";
-import { IoMdCheckmark } from "react-icons/io";
+import { IoMdPlay, IoMdAdd, IoMdCheckmark } from "react-icons/io";
 import { MdOutlineKeyboardArrowDown } from "react-icons/md";
 import useMovieStore from "../../store/movieStore";
+import { useNavigate } from "react-router-dom";
 
 const HoverMovieCard = ({
   id,
@@ -14,6 +13,7 @@ const HoverMovieCard = ({
   isMyList,
 }) => {
   const { toggleMyList } = useMovieStore();
+  const navigate = useNavigate();
 
   return (
     <div className='bg-primary rounded-2xl w-[350px] shadow-hover-card flex flex-col overflow-hidden'>
@@ -41,7 +41,9 @@ const HoverMovieCard = ({
             </button>
           </div>
 
-          <button className='bg-primary border p-2 rounded-full cursor-pointer transition-all duration-200 active:scale-95'>
+          <button
+            onClick={() => navigate(`/home/detail/${id}`)}
+            className='bg-primary border p-2 rounded-full cursor-pointer transition-all duration-200 active:scale-95'>
             <MdOutlineKeyboardArrowDown className='lg:text-2xl' />
           </button>
         </div>

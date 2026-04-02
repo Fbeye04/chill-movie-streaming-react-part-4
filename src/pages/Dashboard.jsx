@@ -17,6 +17,7 @@ const Dashboard = () => {
     <main className='overflow-x-hidden'>
       {heroData && (
         <Hero
+          id={heroData.id}
           heroImg={heroData.backdrop}
           title={heroData.title}
           synopsis={heroData.synopsis}

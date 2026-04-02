@@ -6,6 +6,7 @@ import MyList from "./MyList";
 import Series from "./Series";
 import Film from "./Film";
 import Profil from "./Profil";
+import Detail from "./DetailModal";
 
 const Home = () => {
   return (
@@ -18,6 +19,7 @@ const Home = () => {
         <Route path='film' element={<Film />} />
         <Route path='my-list' element={<MyList />} />
         <Route path='profil' element={<Profil />} />
+        <Route path='detail/:id' element={<Detail />} />
       </Routes>
 
       <Footer />

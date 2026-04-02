@@ -54,7 +54,7 @@ const MovieSection = ({ section, dataMovies, variant }) => {
   };
 
   return (
-    <section className='text-white w-full flex flex-col items-start p-5 md:py-5 lg:py-10 md:px-10 lg:px-20 lg:gap-8 relative z-0 hover:z-50 transition-all duration-300'>
+    <section className='text-white w-full flex flex-col items-start p-5 md:py-5 lg:py-10 md:px-10 lg:px-20 lg:gap-8 relative z-0 hover:z-40 transition-all duration-300'>
       <h3 className='text-xl lg:text-3xl font-bold mb-5'>{section}</h3>
 
       <div className='relative w-full lg:group'>
