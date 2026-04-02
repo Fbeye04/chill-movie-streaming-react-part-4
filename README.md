@@ -13,8 +13,8 @@ It utilizes modern React and Software Engineering patterns such as:
 - Global State Management (`Zustand`)
 - Custom Hooks for separating business logic from UI
 - Axios Interceptors for centralized API configuration & error handling
-- Declarative routing
-- Progressive Rendering with Skeleton Loaders
+- Dynamic Declarative Routing
+- Defensive Programming & Progressive Rendering
 
 ---
 
@@ -29,21 +29,22 @@ It utilizes modern React and Software Engineering patterns such as:
 ### 🧠 Global State Management (Zustand)
 
 - **Review System (CRUD)** – Full Create, Read, Update, and Delete functionality for user movie reviews, now managed seamlessly via Zustand global state.
-- **My List Management** – Users can add movies to their "My List" and remove them (Read & Delete functionality). The state is managed globally, ensuring the UI stays synchronized across different pages.
+- **My List Management** – Users can add movies to their "My List" and remove them. The state is synchronized dynamically across the Detail Page and Home Page without prop drilling.
+- **Authentication & User Profile** – Secure retrieval and global state management of logged-in user data, seamlessly integrating auth states into the Profile Page and protected routes.
+
+### 🛡️ Defensive Programming & SPA Routing
+
+- **Dynamic Detail Pages** – Converted legacy modal pop-ups into standalone, SEO-friendly pages using React Router's dynamic parameters (`/home/detail/:id`).
+- **Safety Nets & Optional Chaining** – Robust error prevention using conditional rendering and optional chaining (`?.`) to eliminate "Blank Screen of Death" errors during asynchronous data fetching.
+- **Hydration & Cache Fixes** – Resolved Zustand `persist` middleware caching anomalies to ensure fresh data hydration on page reloads.
 
 ### 🎨 Advanced UI/UX & Interactions
 
+- **Cross-Platform Navigation Logic** – Implemented context-aware click handlers utilizing `window.innerWidth` to distinctively serve Mobile/Tablet users (direct tap) versus Desktop users (hover interactions).
+- **Semantic Accessibility** – Strict separation of programmatic navigation (`useNavigate`) and semantic routing (`<Link>`) to enable native browser features like "Open in new tab" and improve SEO.
 - **Skeleton Loading State** – Implemented progressive rendering with Skeleton Loaders to provide a smooth, Netflix-like loading experience before data arrives, preventing layout shifts.
-- **Netflix-Style Hover Cards** – Movie cards scale and display additional options upon hovering.
 - **Dynamic Empty States** – Beautifully designed empty state UI when no reviews or movies are present in "My List".
-- **Optimized Horizontal Scrolling** – Improved slider behavior and navigation controls.
 - **Fully Responsive Design** – Optimized for Mobile, Tablet, and Desktop screens.
-
-### 🏠 Navigation & Authentication
-
-- **Dedicated Pages** – Adaptable pages for **Series**, **Film**, and **My List**.
-- **Dynamic Hero Section** – Large banner with overlay actions that adapt based on the active page.
-- **Login & Register Pages** – Clean, focused layouts using shared layout (`AuthLayout`) with custom input components (floating labels & password toggle).
 
 ---
 
@@ -117,6 +118,16 @@ This project was built over multiple sprints:
 
 - **Day 19** – Enhancing UI/UX with Skeleton Loading states and Progressive Rendering
 
+### 💎 Sprint 4: SPA Architecture & Defensive Programming (Current)
+
+- **Day 20** – Auth data integration, Profile Page generation, and global user state sync.
+
+- **Day 21** – Refactoring Detail Modal into a standalone Dynamic Route (/detail/:id).
+
+- **Day 22** – Cross-platform UX optimization (Mobile tap vs Desktop hover logic) and Semantic Routing implementations.
+
+- **Day 23** – Defensive rendering setup, Zustand cache debugging, and complete safety net implementation.
+
 ---
 
 ## 🚀 Getting Started
@@ -185,6 +196,11 @@ Visit: http://localhost:5173
 ![halaman-daftar-saya](/public/screenshots/halaman-daftar-saya.png)
 ![skeleton-loader](/public/screenshots/skeleton-loaders.png)
 
+### New Feature Part 4
+
+![halaman-profil-saya](/public/screenshots/halaman-profil.png)
+![halaman-detail](/public/screenshots/halaman-detail.png)
+
 ## 👨‍💻 Author
 
 Muhammad Fachrezi Barus
@@ -197,10 +213,14 @@ Muhammad Fachrezi Barus
 
 This project is created for educational and portfolio purposes. Feel free to use and modify it with proper credit.
 
-### Beberapa hal kecil yang saya tambahkan/ubah:
+### Some minor things I added/changed:
 
-1. **Sprint 3 (Current)**: Saya asumsikan ini memakan waktu sekitar 5 hari (Day 15-19) agar sesuai dengan ritme _timeline_ sebelumnya. Kalau harinya berbeda, kamu bisa menyesuaikan angkanya.
-2. **Setup Environment Variables**: Saya menambahkan langkah untuk membuat file `.env` di bagian _Getting Started_, karena kamu sudah menggunakan `import.meta.env.VITE_API_BASE_URL` di `config.js` milikmu. Ini sangat penting agar _recruiter_ tahu cara menjalankan aplikasimu.
-3. **Struktur Folder**: Memasukkan `hooks`, `services`, dan `store` agar mencerminkan arsitektur barumu.
+1. **Sprint 4 (Current)**: Added a new sprint (Days 20-23) to reflect the transition from just UI/UX to advanced SPA architecture (Advanced React Patterns).
 
-Silakan di-_review_! Apakah ada bagian lain yang ingin ditambahkan atau disesuaikan bahasanya? Sekali lagi, kerja yang sangat fantastis untuk penyelesaian _sprint_ ini! 👏
+2. **Refactoring Modals into Standalone Pages**: Changed the DetailModal, which was previously nested above the UI, into a full-fledged DetailPage that is SEO-friendly and directly accessible via URL (/home/detail/:id).
+
+3. **Cross-Platform UX Optimization**: Added screen dimension detection logic (window.innerWidth) to Movie Cards. On mobile screens, cards can be clicked directly to navigate to the page. On laptop screens, clicks are disabled to allow users to focus on the hover interaction (preventing accidental clicks).
+
+4. **Defensive Programming**: Added early returns (if (!data)) and aggressive Optional Chaining (?.) on critical pages. This ensures the app will never experience a Blank Screen of Death even on slow internet connections when fetching data from MockAPI.
+
+5. **Accessibility (Semantic Routing)**: Replaced programmatic navigation (useNavigate) with declarative navigation (<Link>) on the Hero Banner element to allow native browser features like "Open link in new tab" to function properly.
