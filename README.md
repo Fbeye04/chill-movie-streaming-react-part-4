@@ -14,7 +14,6 @@ It utilizes modern React and Software Engineering patterns such as:
 - Custom Hooks for separating business logic from UI
 - Axios Interceptors for centralized API configuration & error handling
 - Dynamic Declarative Routing
-- Defensive Programming & Progressive Rendering
 
 ---
 
@@ -35,7 +34,6 @@ It utilizes modern React and Software Engineering patterns such as:
 ### 🛡️ Defensive Programming & SPA Routing
 
 - **Dynamic Detail Pages** – Converted legacy modal pop-ups into standalone, SEO-friendly pages using React Router's dynamic parameters (`/home/detail/:id`).
-- **Safety Nets & Optional Chaining** – Robust error prevention using conditional rendering and optional chaining (`?.`) to eliminate "Blank Screen of Death" errors during asynchronous data fetching.
 - **Hydration & Cache Fixes** – Resolved Zustand `persist` middleware caching anomalies to ensure fresh data hydration on page reloads.
 
 ### 🎨 Advanced UI/UX & Interactions
@@ -221,6 +219,4 @@ This project is created for educational and portfolio purposes. Feel free to use
 
 3. **Cross-Platform UX Optimization**: Added screen dimension detection logic (window.innerWidth) to Movie Cards. On mobile screens, cards can be clicked directly to navigate to the page. On laptop screens, clicks are disabled to allow users to focus on the hover interaction (preventing accidental clicks).
 
-4. **Defensive Programming**: Added early returns (if (!data)) and aggressive Optional Chaining (?.) on critical pages. This ensures the app will never experience a Blank Screen of Death even on slow internet connections when fetching data from MockAPI.
-
-5. **Accessibility (Semantic Routing)**: Replaced programmatic navigation (useNavigate) with declarative navigation (<Link>) on the Hero Banner element to allow native browser features like "Open link in new tab" to function properly.
+4. **Accessibility (Semantic Routing)**: Replaced programmatic navigation (useNavigate) with declarative navigation (<Link>) on the Hero Banner element to allow native browser features like "Open link in new tab" to function properly.
