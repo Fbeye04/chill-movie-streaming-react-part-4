@@ -31,10 +31,9 @@ It utilizes modern React and Software Engineering patterns such as:
 - **My List Management** – Users can add movies to their "My List" and remove them. The state is synchronized dynamically across the Detail Page and Home Page without prop drilling.
 - **Authentication & User Profile** – Secure retrieval and global state management of logged-in user data, seamlessly integrating auth states into the Profile Page and protected routes.
 
-### 🛡️ Defensive Programming & SPA Routing
+### 🛡️ SPA Routing
 
 - **Dynamic Detail Pages** – Converted legacy modal pop-ups into standalone, SEO-friendly pages using React Router's dynamic parameters (`/home/detail/:id`).
-- **Hydration & Cache Fixes** – Resolved Zustand `persist` middleware caching anomalies to ensure fresh data hydration on page reloads.
 
 ### 🎨 Advanced UI/UX & Interactions
 
@@ -116,15 +115,13 @@ This project was built over multiple sprints:
 
 - **Day 19** – Enhancing UI/UX with Skeleton Loading states and Progressive Rendering
 
-### 💎 Sprint 4: SPA Architecture & Defensive Programming (Current)
+### 💎 Sprint 4: SPA Architecture
 
 - **Day 20** – Auth data integration, Profile Page generation, and global user state sync.
 
 - **Day 21** – Refactoring Detail Modal into a standalone Dynamic Route (/detail/:id).
 
 - **Day 22** – Cross-platform UX optimization (Mobile tap vs Desktop hover logic) and Semantic Routing implementations.
-
-- **Day 23** – Defensive rendering setup, Zustand cache debugging, and complete safety net implementation.
 
 ---
 
