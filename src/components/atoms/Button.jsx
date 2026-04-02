@@ -20,7 +20,7 @@ const Button = ({
     <button
       type={type}
       {...props}
-      className={`border text-white rounded-3xl text-xs md:text-lg cursor-pointer flex justify-center items-center transition-all duration-200 active:scale-95 ${variants[variant]} ${className}`}>
+      className={`border text-white rounded-3xl text-xs md:text-lg cursor-pointer flex justify-center items-center transition-all duration-200 active:scale-95 ${variants[variant]} ${className || ""}`}>
       {children}
     </button>
   );
