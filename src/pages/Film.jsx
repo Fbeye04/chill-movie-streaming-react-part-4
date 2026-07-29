@@ -5,9 +5,8 @@ import SkeletonLoader from "../components/molecules/SkeletonLoader";
 
 const Film = () => {
   const { movies, isLoading } = useFetchMovies();
-
   const heroData = movies.find((movie) => movie.id === 5);
-  const onlyFilm = movies.filter((item) => item.type === "Movie");
+  const onlyFilm = movies.filter((item) => item.type === "film");
   const continueWatching = onlyFilm.slice(0, 10);
   const topRating = onlyFilm.filter((movie) => movie.rating >= 4.5);
   const trending = onlyFilm.filter((movie) => movie.isTrending === true);
@@ -39,16 +38,20 @@ const Film = () => {
             dataMovies={continueWatching}
             variant='landscape'
           />
-          <MovieSection
-            section='Top Rating Film Hari ini'
-            dataMovies={topRating}
-            variant='portrait'
-          />
-          <MovieSection
-            section='Film Trending'
-            dataMovies={trending}
-            variant='portrait'
-          />
+          {topRating.length > 0 && (
+            <MovieSection
+              section='Top Rating Film Hari ini'
+              dataMovies={topRating}
+              variant='portrait'
+            />
+          )}
+          {trending.length > 0 && (
+            <MovieSection
+              section='Film Trending'
+              dataMovies={trending}
+              variant='portrait'
+            />
+          )}
           <MovieSection
             section='Rilis Baru'
             dataMovies={newReleases}
