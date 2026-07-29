@@ -6,6 +6,7 @@ import Input from "../components/atoms/Input";
 import googleIcon from "../assets/google.png";
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { loginUser } from "../services/api/userApi";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -23,29 +24,20 @@ const Login = () => {
     });
   };
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
 
-    const dataCheck = localStorage.getItem("user_data");
-
-    if (!dataCheck) {
-      alert("Data not found");
-      return;
+    try {
+      const result = await loginUser({
+        username: formData.username,
+        password: formData.password,
+      });
+      localStorage.setItem("authToken", result.token);
+      navigate("/home");
+    } catch (error) {
+      const serverMessage = error.response?.data?.message || error.message;
+      alert(serverMessage);
     }
-
-    const savedProfile = JSON.parse(dataCheck);
-
-    if (
-      formData.username !== savedProfile.username ||
-      formData.password !== savedProfile.password
-    ) {
-      alert("Username or password incorrect");
-      return;
-    }
-
-    alert("Login successful, welcome");
-
-    navigate("/home");
   };
 
   return (

@@ -7,6 +7,16 @@ const apiClient = axios.create({
   },
 });
 
+apiClient.interceptors.request.use((config) => {
+  const authToken = localStorage.getItem("authToken");
+
+  if (authToken) {
+    config.headers.Authorization = `Bearer ${authToken}`;
+  }
+
+  return config;
+});
+
 apiClient.interceptors.response.use(
   (response) => {
     return response;

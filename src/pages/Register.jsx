@@ -6,12 +6,15 @@ import Input from "../components/atoms/Input";
 import googleIcon from "../assets/google.png";
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { registerUser } from "../services/api/userApi";
 
 const Register = () => {
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
+    fullname: "",
     username: "",
+    email: "",
     password: "",
     confirmPassword: "",
   });
@@ -24,7 +27,7 @@ const Register = () => {
     });
   };
 
-  const handleRegister = (e) => {
+  const handleRegister = async (e) => {
     e.preventDefault();
 
     if (formData.password !== formData.confirmPassword) {
@@ -32,9 +35,22 @@ const Register = () => {
       return;
     }
 
-    localStorage.setItem("user_data", JSON.stringify(formData));
-    alert("Registration successful");
-    navigate("/");
+    try {
+      await registerUser({
+        fullname: formData.fullname,
+        username: formData.username,
+        email: formData.email,
+        password: formData.password,
+      });
+
+      alert(
+        "Registration successful, please check your email for verification",
+      );
+      navigate("/");
+    } catch (error) {
+      const serverMessage = error.response?.data?.message || error.message;
+      alert(serverMessage);
+    }
   };
 
   return (
@@ -48,6 +64,16 @@ const Register = () => {
 
       <form onSubmit={handleRegister} className='w-full flex flex-col'>
         <Input
+          labelInput='Full Name'
+          type='text'
+          id='fullname'
+          name='fullname'
+          value={formData.fullname}
+          onChange={handleChange}
+          placeholder='Masukkan nama lengkap'
+          className='mb-5'
+        />
+        <Input
           labelInput='Username'
           type='text'
           id='username'
@@ -55,6 +81,16 @@ const Register = () => {
           value={formData.username}
           onChange={handleChange}
           placeholder='Masukkan username'
+          className='mb-5'
+        />
+        <Input
+          labelInput='Email'
+          type='email'
+          id='email'
+          name='email'
+          value={formData.email}
+          onChange={handleChange}
+          placeholder='Masukkan email'
           className='mb-5'
         />
         <Input
