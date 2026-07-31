@@ -7,25 +7,52 @@ import ProfileInput from "../components/molecules/ProfileInput";
 import avatarProfile from "../assets/avatar.png";
 import warningStates from "../assets/warning.png";
 import { useEffect, useState } from "react";
+import { getProfile, updateProfile } from "../services/api/userApi";
 
 const Profil = () => {
   const { movies } = useFetchMovies();
   const navigate = useNavigate();
   const myMovies = movies.filter((movie) => movie.isMyList === true);
 
-  const [profileData] = useState(() => {
-    const storedData = localStorage.getItem("user_data");
-    return storedData ? JSON.parse(storedData) : null;
-  });
+  const [profileData, setProfileData] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [isEditing, setIsEditing] = useState(false);
 
   useEffect(() => {
-    if (!profileData) {
-      alert("silahkan login");
-      navigate("/");
-    }
-  }, [profileData, navigate]);
+    const fetchProfile = async () => {
+      try {
+        const data = await getProfile();
+        setProfileData(data);
+        setIsLoading(false);
+        setUsername(data.username);
+        setEmail(data.email);
+      } catch (error) {
+        alert("silahkan login");
+        console.error("Silahkan login:", error);
+        navigate("/");
+      }
+    };
 
-  if (!profileData) {
+    fetchProfile();
+  }, [navigate]);
+
+  const handleSave = async () => {
+    try {
+      await updateProfile({ username, email, newPassword });
+      setIsEditing(false);
+      setNewPassword("");
+      alert("User profil berhasil di update");
+    } catch (error) {
+      alert(error.response?.data?.message || error.message);
+    }
+  };
+
+  // bisa tambahkan fungsi isSaving nanti untuk mendisable tombol save agar tidak bisa digunakan saat proses update belum selesai
+
+  if (isLoading || !profileData) {
     return (
       <div className='w-full min-h-screen flex justify-center items-center text-white'>
         <h2>Memuat data profil...</h2>
@@ -60,16 +87,34 @@ const Profil = () => {
 
           <ProfileInput
             label='Nama Pengguna'
-            value={profileData.username}
+            type='text'
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
             canEdit={true}
+            isEditing={isEditing}
+            onEditClick={() => setIsEditing(true)}
+          />
+          <ProfileInput
+            label='Email'
+            type='email'
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            canEdit={true}
+            isEditing={isEditing}
+            onEditClick={() => setIsEditing(true)}
           />
           <ProfileInput
             label='Kata Sandi'
-            value={profileData.password}
+            type='password'
+            value={newPassword}
+            onChange={(e) => setNewPassword(e.target.value)}
+            placeholder='Kosongkan jika tidak diganti'
             canEdit={true}
+            isEditing={isEditing}
+            onEditClick={() => setIsEditing(true)}
           />
 
-          <Button variant='primary' className='px-6 py-2'>
+          <Button onClick={handleSave} variant='primary' className='px-6 py-2'>
             Simpan
           </Button>
         </div>
