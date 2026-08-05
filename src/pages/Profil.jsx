@@ -1,18 +1,17 @@
 import { MdOutlineUploadFile } from "react-icons/md";
 import { Link, useNavigate } from "react-router-dom";
 import Button from "../components/atoms/Button";
-import useFetchMovies from "../hooks/useFetchMovies";
 import MovieCard from "../components/molecules/MovieCard";
 import ProfileInput from "../components/molecules/ProfileInput";
 import avatarProfile from "../assets/avatar.png";
 import warningStates from "../assets/warning.png";
 import { useEffect, useState } from "react";
 import { getProfile, updateProfile } from "../services/api/userApi";
+import useFetchMyList from "../hooks/useFetchMyList";
 
 const Profil = () => {
-  const { movies } = useFetchMovies();
   const navigate = useNavigate();
-  const myMovies = movies.filter((movie) => movie.isMyList === true);
+  const { myListMovies } = useFetchMyList();
 
   const [profileData, setProfileData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -151,11 +150,23 @@ const Profil = () => {
           </Link>
         </div>
 
-        {myMovies.length > 0 && (
+        {myListMovies.length > 0 && (
           <div className='grid grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4 lg:gap-6 w-full mt-5 justify-items-center'>
-            {myMovies.slice(0, 6).map((movie) => (
-              <MovieCard key={movie.id} variant='grid' {...movie} />
-            ))}
+            {myListMovies.slice(0, 6).map((movie, index) => {
+              let visibilityClass = "";
+
+              if (index === 3) {
+                visibilityClass = "hidden md:block";
+              } else if (index >= 4) {
+                visibilityClass = "hidden lg:block";
+              }
+
+              return (
+                <div key={movie.id} className={`w-full ${visibilityClass}`}>
+                  <MovieCard variant='grid' {...movie} />
+                </div>
+              );
+            })}
           </div>
         )}
       </div>

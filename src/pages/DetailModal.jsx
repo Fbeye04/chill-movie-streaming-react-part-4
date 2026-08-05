@@ -14,6 +14,16 @@ const DetailModal = () => {
 
   const filmMatching = movies.find((item) => item.id === Number(id));
 
+  // Jika filmMatching bernilai undefined, hentikan eksekusi dan render komponen ini saja
+  if (!filmMatching) {
+    return (
+      <div className='min-h-screen bg-primary text-white flex justify-center items-center'>
+        <p>Memuat data film...</p>
+        {/* Nanti kamu bisa ganti teks ini dengan komponen Spinner atau Skeleton loader milikmu */}
+      </div>
+    );
+  }
+
   // karena film matching itu mengirimkan keseluruhan data termasuk isMyList yang selalu false maka perlu dibuat logic sendiri agar berubah-ubah nilai boolean nya
   const isMovieOnMyList = myListMovies.some(
     (movie) => movie.id === filmMatching.id,
