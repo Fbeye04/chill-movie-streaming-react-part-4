@@ -10,9 +10,14 @@ const DetailModal = () => {
   const { movies } = useFetchMovies();
   const navigate = useNavigate();
   const { id } = useParams();
-  const { toggleMyList } = useMovieStore();
+  const { toggleMyList, myListMovies } = useMovieStore();
 
   const filmMatching = movies.find((item) => item.id === Number(id));
+
+  // karena film matching itu mengirimkan keseluruhan data termasuk isMyList yang selalu false maka perlu dibuat logic sendiri agar berubah-ubah nilai boolean nya
+  const isMovieOnMyList = myListMovies.some(
+    (movie) => movie.id === filmMatching.id,
+  );
 
   return (
     <main className='bg-primary text-white min-h-screen'>
@@ -45,7 +50,7 @@ const DetailModal = () => {
               <Button
                 variant='transparent'
                 onClick={() => toggleMyList(filmMatching.id)}>
-                {filmMatching.isMyList ? (
+                {isMovieOnMyList ? (
                   <IoMdCheckmark className='text-lg md:text-xl' />
                 ) : (
                   <IoMdAdd className='text-lg md:text-xl' />

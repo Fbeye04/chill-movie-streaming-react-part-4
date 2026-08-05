@@ -18,10 +18,11 @@ const MovieCard = ({
   genre,
   duration,
   ageRating,
-  isMyList,
 }) => {
   const navigate = useNavigate();
-  const { toggleMyList } = useMovieStore();
+  const { toggleMyList, myListMovies } = useMovieStore();
+
+  const movieFromMyList = myListMovies.some((movie) => movie.id === id);
 
   const isLandscape = variant === "landscape";
 
@@ -79,7 +80,7 @@ const MovieCard = ({
             genre={genre}
             duration={duration}
             ageRating={ageRating}
-            isMyList={isMyList}
+            isMyList={movieFromMyList}
           />
         </div>
       )}

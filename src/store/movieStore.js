@@ -1,39 +1,64 @@
 import { create } from "zustand";
-import { persist } from "zustand/middleware";
-import { getMovies } from "../services/api/movieApi";
+import { getMovies, mapMovieFromBackend } from "../services/api/movieApi";
+import {
+  addToMyList,
+  deleteFromMyList,
+  getMyList,
+} from "../services/api/myListApi";
 
-const useMovieStore = create(
-  persist(
-    (set) => ({
-      movies: [],
-      isLoading: false,
+const useMovieStore = create((set, get) => ({
+  movies: [],
+  myListMovies: [],
+  isMoviesLoading: false, // ini sebenarnya gak dipakai di useFetchMovies jadi perlu dipertimbangkan apakah nanti isFakeLoading dihapus atau yang ini yang dihapus
+  isMyListLoading: false,
 
-      fetchMovies: async () => {
-        set({ isLoading: true });
+  fetchMovies: async () => {
+    set({ isMoviesLoading: true });
 
-        try {
-          const data = await getMovies();
-          set({ movies: data, isLoading: false });
-        } catch (error) {
-          console.error("Gagal mengambil data:", error);
-          set({ isLoading: false });
-        }
-      },
+    try {
+      const data = await getMovies();
+      set({ movies: data, isMoviesLoading: false });
+    } catch (error) {
+      console.error("Gagal mengambil data:", error);
+      set({ isMoviesLoading: false });
+    }
+  },
 
-      toggleMyList: (movieId) => {
-        set((state) => ({
-          movies: state.movies.map((movie) =>
-            movie.id == movieId
-              ? { ...movie, isMyList: !movie.isMyList }
-              : movie,
-          ),
-        }));
-      },
-    }),
-    {
-      name: "my-list-movie",
-    },
-  ),
-);
+  fetchMyList: async () => {
+    set({ isMyListLoading: true });
+
+    try {
+      const myList = await getMyList();
+      const formattedList = myList.map(mapMovieFromBackend);
+      set({ myListMovies: formattedList, isMyListLoading: false });
+    } catch (error) {
+      console.error("Gagal mengambil data daftar saya:", error);
+      set({ isMyListLoading: false });
+    }
+  },
+
+  resetStore: () => {
+    set({ movies: [], myListMovies: [] });
+  },
+
+  toggleMyList: async (movieId) => {
+    try {
+      const isMovieOnList = get().myListMovies.some(
+        (movie) => movie.id === movieId,
+      );
+
+      if (isMovieOnList) {
+        await deleteFromMyList({ idSeriesFilm: movieId });
+      } else {
+        await addToMyList({ idSeriesFilm: movieId });
+      }
+
+      await get().fetchMyList();
+    } catch (error) {
+      console.error("Gagal mengubah status my list:", error);
+      throw error;
+    }
+  },
+}));
 
 export default useMovieStore;

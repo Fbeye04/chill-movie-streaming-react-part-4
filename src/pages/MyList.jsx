@@ -1,17 +1,15 @@
 import { IoMdFilm } from "react-icons/io";
 import { Link } from "react-router-dom";
-import useFetchMovies from "../hooks/useFetchMovies";
 import MovieCard from "../components/molecules/MovieCard";
 import SkeletonLoader from "../components/molecules/SkeletonLoader";
+import useFetchMyList from "../hooks/useFetchMyList";
 
 const MyList = () => {
-  const { movies, isLoading } = useFetchMovies();
-
-  const myMovies = movies.filter((movie) => movie.isMyList === true);
+  const { myListMovies, isMyListLoading } = useFetchMyList();
 
   return (
     <main className='flex-1 flex flex-col'>
-      {isLoading ? (
+      {isMyListLoading ? (
         <>
           <SkeletonLoader variant='portrait' />
         </>
@@ -20,9 +18,9 @@ const MyList = () => {
           <section className='text-white w-full flex-1 flex flex-col items-start p-5 md:py-5 lg:py-10 md:px-10 lg:px-20 lg:gap-8'>
             <h3 className='text-xl lg:text-3xl font-bold mb-5'>Daftar Saya</h3>
 
-            {myMovies.length > 0 ? (
+            {myListMovies.length > 0 ? (
               <div className='grid grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4 lg:gap-6 w-full mt-5 justify-items-center'>
-                {myMovies.map((movie) => (
+                {myListMovies.map((movie) => (
                   <MovieCard key={movie.id} variant='grid' {...movie} />
                 ))}
               </div>

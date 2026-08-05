@@ -4,11 +4,20 @@ import AvatarProfile from "../../assets/avatar.png";
 import { IoMdPerson } from "react-icons/io";
 import { IoMdStar } from "react-icons/io";
 import { IoMdExit } from "react-icons/io";
-import { NavLink, Link } from "react-router-dom";
+import { NavLink, Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
+import useMovieStore from "../../store/movieStore";
 
 const Header = () => {
+  const navigate = useNavigate();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const { resetStore } = useMovieStore();
+
+  const handleLogout = () => {
+    localStorage.removeItem("authToken");
+    resetStore();
+    navigate("/");
+  };
 
   return (
     <header className='py-4 px-6 md:py-5 md:px-10 lg:px-20 flex justify-between items-center md:gap-12 sticky top-0 w-full z-50 bg-primary backdrop-blur-sm'>
@@ -68,12 +77,12 @@ const Header = () => {
               <span>Ubah Premium</span>
             </Link>
 
-            <Link
-              to='/'
+            <button
+              onClick={handleLogout}
               className='flex items-center gap-3 px-4 py-3 text-white hover:text-blue-700 transition-colors text-sm'>
               <IoMdExit />
               <span>Keluar</span>
-            </Link>
+            </button>
           </div>
         )}
       </div>
