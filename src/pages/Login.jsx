@@ -7,9 +7,11 @@ import googleIcon from "../assets/google.png";
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { loginUser } from "../services/api/userApi";
+import useAuthStore from "../store/authStore";
 
 const Login = () => {
   const navigate = useNavigate();
+  const login = useAuthStore((state) => state.login);
 
   const [formData, setFormData] = useState({
     username: "",
@@ -32,7 +34,8 @@ const Login = () => {
         username: formData.username,
         password: formData.password,
       });
-      localStorage.setItem("authToken", result.token);
+      console.log("HASIL DARI API:", result);
+      login(result.token);
       navigate("/home");
     } catch (error) {
       const serverMessage = error.response?.data?.message || error.message;

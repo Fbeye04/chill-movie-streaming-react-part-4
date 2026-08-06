@@ -7,14 +7,16 @@ import { IoMdExit } from "react-icons/io";
 import { NavLink, Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import useMovieStore from "../../store/movieStore";
+import useAuthStore from "../../store/authStore";
 
 const Header = () => {
   const navigate = useNavigate();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const { resetStore } = useMovieStore();
+  const logout = useAuthStore((state) => state.logout);
 
   const handleLogout = () => {
-    localStorage.removeItem("authToken");
+    logout();
     resetStore();
     navigate("/");
   };
