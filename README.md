@@ -4,6 +4,10 @@
 
 ---
 
+## Repository
+- Frontend: https://github.com/Fbeye04/chill-movie-streaming-react-part-4
+- Backend: https://github.com/Fbeye04/chill-database-final
+
 ## 🎯 About the Project
 
 This project focuses on implementing a responsive UI/UX for a streaming service. The main goal was to migrate a static design into a dynamic **Single Page Application (SPA)** that communicates with an external database.
