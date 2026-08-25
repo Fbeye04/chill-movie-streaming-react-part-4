@@ -1,7 +1,7 @@
 import apiClient from "./config";
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL.replace("/api", "");
-const BASE_STATIC_URL = `${API_BASE_URL}/static/`;
+const BASE_PORTRAIT_URL = "/posters/portrait/";
+const BASE_LANDSCAPE_URL = "/posters/landscape/";
 
 export const mapMovieFromBackend = (rawMovie) => {
   const currentYear = new Date().getFullYear();
@@ -15,10 +15,10 @@ export const mapMovieFromBackend = (rawMovie) => {
     ageRating: rawMovie.rating_umur,
     type: rawMovie.tipe_tayangan,
     image: rawMovie.poster_portrait
-      ? BASE_STATIC_URL + rawMovie.poster_portrait
+      ? BASE_PORTRAIT_URL + rawMovie.poster_portrait
       : "...",
     backdrop: rawMovie.poster_landscape
-      ? BASE_STATIC_URL + rawMovie.poster_landscape
+      ? BASE_LANDSCAPE_URL + rawMovie.poster_landscape
       : "...",
     rating: null,
     genre: "Tidak diketahui",
