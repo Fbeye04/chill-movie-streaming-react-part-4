@@ -63,4 +63,5 @@ cp "public/posters/landscape/baymax.jpg" "public/posters/landscape/baymax-landsc
 cp "public/posters/landscape/dilan.jpg" "public/posters/landscape/dilan-landscape.jpg"
 cp "public/posters/landscape/happiness.png" "public/posters/landscape/happiness-landscape.jpg"
 cp "public/posters/landscape/spiderman-across.jpg" "public/posters/landscape/spiderman-across-landscape.jpg"
+cp "public/posters/landscape/antman.jpg" "public/posters/landscape/antman-landscape.jpg"
 echo "Selesai copy semua poster."
